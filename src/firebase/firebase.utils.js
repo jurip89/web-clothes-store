@@ -1,6 +1,6 @@
 import  {initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import {getFirestore} from'firebase/firestore';
+import {getFirestore, doc, setDoc,getDoc } from'firebase/firestore';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -21,7 +21,9 @@ const analytics = getAnalytics(app);
 
 export const auth = getAuth();
 auth.languageCode = 'en';
-export const firestore = getFirestore();
+export const db = getFirestore();
+
+
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
@@ -35,12 +37,27 @@ export const signInWithGoogle = () => signInWithPopup(auth, provider)
   // ...
 }).catch((error) => {
   // Handle Errors here.
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  // The email of the user's account used.
-  const email = error.email;
-  // The AuthCredential type that was used.
-  const credential = GoogleAuthProvider.credentialFromError(error);
-  // ...
+  console.log( error.code,error.message,error)
 });
 
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  if (!userAuth) return;
+  const userRef = doc(db, "users", `${userAuth.uid}`);
+  const docSnap = await getDoc(userRef);
+  if (!docSnap.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      await setDoc(doc(db, 'users', `${userAuth.uid}`), {
+        displayName,
+        email,
+        createdAt,
+        ...additionalData
+      });
+    } catch (error) {
+      console.log('error creating user', error.message)
+    }
+    return userRef
+  }
+}
