@@ -60,7 +60,7 @@ const SHOP_DATA = {
       }
     ]
   },
-  snaeakers:{
+  sneakers:{
     id: 2,
     title: 'Sneakers',
     routeName: 'sneakers',

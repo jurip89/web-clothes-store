@@ -14,7 +14,7 @@ const CollectionPage = ({ collection }) => {
                 {items.map(item => <CollectionItem key={item.id} item={item}/>)}
             </div>
     </div>
-);}
+)}
     
 const mapStateToProps =(state,ownProps)=> ({
     collection: selectCollections(ownProps.match.params.collectionId)(state)
