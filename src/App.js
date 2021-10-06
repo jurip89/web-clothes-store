@@ -3,7 +3,8 @@ import './App.css';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils'
+import { auth, createUserProfileDocument} from './firebase/firebase.utils'
+
 
 import HomePage from './components/pages/homePage/homepage.component';
 import CheckOutPage from './components/pages/check-outPage/check-out-page.component';
@@ -22,7 +23,9 @@ class App extends React.Component {
   unsuscribeFromAuth = null
 
   componentDidMount() {
-    const {setCurrentUser}=this.props
+
+    const { setCurrentUser } = this.props
+    
     this.unsuscribeFromAuth= auth.onAuthStateChanged(async userAuth => {
       setCurrentUser(userAuth );
       console.log(this.state)
@@ -30,6 +33,9 @@ class App extends React.Component {
       
     })
   }
+  
+
+  
   
   componentWillUnmount() {
   this.unsuscribeFromAuth()
@@ -56,7 +62,7 @@ class App extends React.Component {
 };
 
 const mapStateToProps = createStructuredSelector({
-currentUser:selectCurrentUser
+  currentUser: selectCurrentUser
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -1,5 +1,5 @@
 import React from "react";
-import CustomButton from "../custom-button/custom-button-component";
+
 
 import { CollectionItemContainer,ImgContainer, CustomButtonForCollectionItem, SpanName,SpanPrice,FooterContainer} from "./collection-item.style";
 

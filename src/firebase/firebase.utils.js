@@ -30,7 +30,7 @@ provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => signInWithPopup(auth, provider)
 .then((result) => {
   // This gives you a Google Access Token. You can use it to access the Google API.
-  const credential = GoogleAuthProvider.credentialFromResult(result);
+   GoogleAuthProvider.credentialFromResult(result);
 }).catch((error) => {
   // Handle Errors here.
   console.log( error.code,error.message,error)
@@ -39,8 +39,12 @@ export const signInWithGoogle = () => signInWithPopup(auth, provider)
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
+
   const userRef = doc(db, "users", `${userAuth.uid}`);
+
   const docSnap = await getDoc(userRef);
+
+
   if (!docSnap.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -56,4 +60,18 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     }
     return userRef
   }
-}
+};
+
+
+// export const convertCollectionsToMap = (collections) => {
+//   const transformedCollection = collections.docs.map(doc => {
+//     const { title, items } = doc.data();
+//     return {
+//       routeName: encodeURI(title.toLowerCase()),
+//       id: doc.id,
+//       title,
+//       items
+//     }
+//     console.log(transformedCollection)
+//   })
+// }

@@ -36,7 +36,7 @@ class SignUp extends React.Component {
                     createUserProfileDocument(user,{ displayName} )
                 
                     this.setState({
-                        displayName: '',
+                        displayName:'',
                         email: '',
                         password: '',
                         confirmPassword: ''
